@@ -1,0 +1,44 @@
+<%- include("partials/head.ejs") %> <%- include("partials/header.ejs") %>
+
+<div class="main">
+  <h1 class="display-5 fw-bolder lh-1 mb-3 mt-5 quienesSomos">
+    Puedes buscar paseadores en tu area
+  </h1>
+  <div class="wrap">
+    <div class="search">
+      <input
+        type="text"
+        class="searchTerm"
+        placeholder="Qué área estas buscando?"
+      />
+      <button type="submit" class="searchButton">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+  </div>
+
+  <ul class="cards">
+    <% if (walkers.length === 0) { %>
+    <h1>No hay Paseadores para mostrar en este momento</h1>
+    <% }else{ %> <% walkers.forEach(walker =>{ %>
+    <li class="cards_item">
+      <div class="card">
+        <div
+          class="card_image"
+          style="background-image: url('<%= walker.imgUrl %>')"
+        ></div>
+        <div class="card_content">
+          <h2 class="card_title"><%= walker.name%></h2>
+          <p class="card_text">
+            <%= walker.description %> y me puedes encontrar trabajando en <%=
+            walker.area %>
+          </p>
+          <button class="btn card_btn">Ver info</button>
+        </div>
+      </div>
+    </li>
+    <% }) %> <% } %>
+    <li class="cards_item"></li>
+  </ul>
+</div>
+<%- include("partials/footer.ejs") %>

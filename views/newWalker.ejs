@@ -1,0 +1,171 @@
+<%- include("partials/head.ejs") %> <%- include("partials/header.ejs") %>
+
+<div class="section">
+  <div class="container">
+    <div class="row full-height justify-content-center">
+      <div class="col-12 text-center align-self-center py-5 containerForm">
+        <h1 class="display-5 fw-bolder lh-1 mb-3 quienesSomos">
+          Todavía no eres parte de nuestro equipo?
+        </h1>
+        <div class="section pb-5 pt-5 pt-sm-2 text-center">
+          <h6 class="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h6>
+          <input class="checkbox" type="checkbox" id="reg-log" name="reg-log" />
+          <label for="reg-log"></label>
+          <div class="card-3d-wrap mx-auto">
+            <div class="card-3d-wrapper">
+              <div class="card-front">
+                <form action="/walkers/signin" method="POST">
+                  <div class="center-wrap">
+                    <div class="section text-center">
+                      <h4 class="mb-4 pb-3">Log In</h4>
+                      <div class="form-group">
+                        <input
+                          type="email"
+                          name="email"
+                          class="form-style"
+                          placeholder="Tu Email"
+                          id="logemail"
+                          autocomplete="off"
+                          required
+                        />
+                      </div>
+                      <div class="form-group mt-2">
+                        <input
+                          type="password"
+                          name="password"
+                          class="form-style"
+                          placeholder="Tu Password"
+                          id="logpass"
+                          autocomplete="off"
+                          required
+                        />
+                      </div>
+                      <input class="btn mt-4" type="submit" />
+                    </div>
+                    <% if (error) { %>
+                    <h1 style="color: red"><%= error %></h1>
+                    <% } %>
+                  </div>
+                </form>
+              </div>
+              <div class="card-back">
+                <form action="/walkers/signup" method="POST">
+                  <div class="center-wrap">
+                    <div class="section text-center">
+                      <h4 class="mb-4 pb-3">Sign Up</h4>
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          name="name"
+                          class="form-style"
+                          placeholder="Tu Nombre"
+                          id="logname"
+                          autocomplete="off"
+                          required
+                        />
+                      </div>
+                      <div class="form-group mt-2">
+                        <input
+                          type="email"
+                          name="email"
+                          class="form-style"
+                          placeholder="Tu Email"
+                          id="logemail"
+                          autocomplete="off"
+                          required
+                        />
+                      </div>
+                      <div class="form-group mt-2">
+                        <input
+                          type="password"
+                          name="password"
+                          class="form-style"
+                          placeholder="Tu Password"
+                          id="logpass"
+                          autocomplete="off"
+                          required
+                        />
+                      </div>
+                      <!-- <div class="form-group mt-2">
+                        <input
+                          type="text"
+                          name="area"
+                          class="form-style"
+                          placeholder="Tu area"
+                          id="logpass"
+                          autocomplete="off"
+                          required
+                        />
+                      </div> -->
+                      <div class="form-group mt-2">
+                        <input
+                          type="text"
+                          name="imgUrl"
+                          class="form-style"
+                          placeholder="Foto para tu tarjeta de presentación"
+                          id="logpass"
+                          autocomplete="off"
+                          required
+                        />
+                      </div>
+                      <div class="form-group mt-2">
+                        <input
+                          type="text"
+                          name="phoneNumber"
+                          class="form-style"
+                          placeholder="Tu número de telefono"
+                          id="logpass"
+                          autocomplete="off"
+                          required
+                        />
+                      </div>
+                      <div class="form-group mt-2">
+                        <input
+                          type="text"
+                          name="profileImgUrl"
+                          class="form-style"
+                          placeholder="Tu foto de perfil"
+                          id="logpass"
+                          autocomplete="off"
+                          required
+                        />
+                      </div>
+                      <div class="form-group mt-2">
+                        <input
+                          type="text"
+                          name="description"
+                          class="form-style"
+                          placeholder="Breve descripción"
+                          id="logpass"
+                          autocomplete="off"
+                          required
+                        />
+                      </div>
+                      <div class="form-group mt-2">
+                        <select name="area" id="logpass" class="form-style">
+                          <option value="san miguel">
+                            Ciudad donde trabajas
+                          </option>
+                          <option value="San Miguel">San Miguel</option>
+                          <option value="Yerba Buena">Yerba Buena</option>
+                          <option value="Famailla">Famaillá</option>
+                          <option value="Lules">Lules</option>
+                          <option value="Concepcion">Concepción</option>
+                        </select>
+                      </div>
+                      <input class="btn mt-4" type="submit" />
+                    </div>
+                    <% if (error) { %>
+                    <h1 style="color: red"><%= error %></h1>
+                    <% } %>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include("partials/footer.ejs") %>

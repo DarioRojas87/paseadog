@@ -1,0 +1,146 @@
+<%- include("partials/head.ejs") %> <%- include("partials/header.ejs") %>
+
+<div class="section">
+  <div class="container profileContainer">
+    <h1 class="display-5 fw-bolder lh-1 mb-3 quienesSomos">Datos de Perfil</h1>
+    <div class="photoContainer">
+      <div class="cardPhotoContainer">
+        <h2>Foto de tu tarjeta de presentación</h2>
+        <div
+          class="cardPhoto"
+          style="background-image: url('<%= photo %>')"
+        ></div>
+      </div>
+      <div class="profilePhotoContainer">
+        <h2>Foto de Perfil</h2>
+        <div
+          class="profilePhoto1"
+          style="background-image: url('<%= profilePhoto %>')"
+        ></div>
+      </div>
+    </div>
+    <form class="profileForm" action="/walkers/signup" method="POST">
+      <div class="section text-center">
+        <h4 class="mb-4 pb-3">Sign Up</h4>
+        <div class="form-group">
+          <input
+            type="text"
+            name="name"
+            class="form-style"
+            placeholder="Tu Nombre"
+            id="logname"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div class="form-group mt-2">
+          <input
+            type="email"
+            name="email"
+            class="form-style"
+            placeholder="Tu Email"
+            id="logemail"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div class="form-group mt-2">
+          <input
+            type="password"
+            name="password"
+            class="form-style"
+            placeholder="Tu Password"
+            id="logpass"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div class="form-group mt-2">
+          <input
+            type="text"
+            name="profileImgUrl"
+            class="form-style"
+            placeholder="Foto para tu tarjeta de presentación"
+            id="logpass"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div class="form-group mt-2">
+          <input
+            type="text"
+            name="phoneNumber"
+            class="form-style"
+            placeholder="Tu número de telefono"
+            id="logpass"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div class="form-group mt-2">
+          <input
+            type="text"
+            name="imgUrl"
+            class="form-style"
+            placeholder="Tu foto de perfil"
+            id="logpass"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div class="form-group mt-2">
+          <input
+            type="text"
+            name="description"
+            class="form-style"
+            placeholder="Breve descripción"
+            id="logpass"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div class="form-group mt-2">
+          <select name="area" id="logpass" class="form-style">
+            <option value="san miguel">Ciudad donde trabajas</option>
+            <option value="san miguel">San Miguel</option>
+            <option value="yerba buena">Yerba Buena</option>
+            <option value="famailla">Famaillá</option>
+            <option value="lules">Lules</option>
+            <option value="concepcion">Concepción</option>
+          </select>
+        </div>
+        <input class="btn mt-4" type="submit" value="Editar" />
+
+    </div>
+    <% if (error) { %>
+        <h1 style="color: red"><%= error %></h1>
+        <% } %>
+    </form>
+    
+    <button type="button" class="btn btn-primary deleteButton" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Eliminar cuenta en PaseaDog
+</button>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Cuidado!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       <h2>Estas seguro de que deseas eliminar tu cuenta en PaseaDog?</h2>
+      </div>
+      <div class="modal-footer">
+        
+       <a href="/deletewalker/<%= _id %> ">
+      <button class="btn mt-4 deleteButton" 
+    />borrar cuenta</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+</div>
+
+<%- include("partials/footer.ejs") %>
