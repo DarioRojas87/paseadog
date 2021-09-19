@@ -19,10 +19,13 @@
         ></div>
       </div>
     </div>
-    <form class="profileForm" action="/update/<%= _id %> " method="GET">
-      <div class="section text-center">
+    
+      <% if (!edit) { %>
+        <form class="profileForm" action="/update/<%= _id %> " method="GET">
+       <div class="section text-center">
        <div class="form-group mt-2">
           <input
+          
             type="text"
             name="profileImgUrl"
             class="form-style"
@@ -30,6 +33,9 @@
             id="logpass"
             autocomplete="off"
             required
+            value="<%= photo %>"
+            disabled
+           
           />
         </div>
         <div class="form-group mt-2">
@@ -41,6 +47,8 @@
             id="logpass"
             autocomplete="off"
             required
+            value="<%= phoneNumber %>"
+            disabled
           />
         </div>
         <div class="form-group mt-2">
@@ -52,6 +60,8 @@
             id="logpass"
             autocomplete="off"
             required
+            value="<%= profilePhoto %>"
+            disabled
           />
         </div>
         <div class="form-group mt-2">
@@ -63,25 +73,110 @@
             id="logpass"
             autocomplete="off"
             required
+            value="<%= description %>"
+            disabled
           />
         </div>
         <div class="form-group mt-2">
-          <select name="area" id="logpass" class="form-style">
-            <option value="san miguel">Ciudad donde trabajas</option>
-            <option value="san miguel">San Miguel</option>
-            <option value="yerba buena">Yerba Buena</option>
-            <option value="famailla">Famaillá</option>
-            <option value="lules">Lules</option>
-            <option value="concepcion">Concepción</option>
+          <select name="area" id="logpass" class="form-style" disabled>
+            <option value="<%= area %>">Ciudad donde trabajas</option>
+            <option value="San miguel">San Miguel</option>
+            <option value="Yerba buena">Yerba Buena</option>
+            <option value="Famailla">Famaillá</option>
+            <option value="Lules">Lules</option>
+            <option value="Concepcion">Concepción</option>
           </select>
         </div>
-        <input class="btn mt-4" type="submit" value="Editar" />
+        
 
+        <a class="editButton" href="/update/<%= _id %> ">
+          <button class="btn mt-4 deleteButton" 
+        />Editar Cuenta</button></a>
+        
     </div>
     <% if (error) { %>
         <h1 style="color: red"><%= error %></h1>
         <% } %>
     </form>
+        <% } else { %>
+          <form class="profileForm" action="/walkers/signup" method="POST">
+      <div class="section text-center">
+       <div class="form-group mt-2">
+          <input
+          
+            type="text"
+            name="imgUrl"
+            class="form-style"
+            placeholder="Foto para tu tarjeta de presentación"
+            id="logpass"
+            autocomplete="off"
+            required
+            value="<%= photo %>"
+            
+           
+          />
+        </div>
+        <div class="form-group mt-2">
+          <input
+            type="text"
+            name="phoneNumber"
+            class="form-style"
+            placeholder="Tu número de telefono"
+            id="logpass"
+            autocomplete="off"
+            required
+            value="<%= phoneNumber %>"
+          />
+        </div>
+        <div class="form-group mt-2">
+          <input
+            type="text"
+            name="profileImgUrl"
+            class="form-style"
+            placeholder="Tu foto de perfil"
+            id="logpass"
+            autocomplete="off"
+            required
+            value="<%= profilePhoto %>"
+          />
+        </div>
+        <div class="form-group mt-2">
+          <input
+            type="text"
+            name="description"
+            class="form-style"
+            placeholder="Breve descripción"
+            id="logpass"
+            autocomplete="off"
+            required
+            value="<%= description %>"
+          />
+        </div>
+        <div class="form-group mt-2">
+          <select name="area" id="logpass" class="form-style">
+            <option value="<%= area %>">Ciudad donde trabajas</option>
+            <option value="San miguel">San Miguel</option>
+            <option value="Yerba buena">Yerba Buena</option>
+            <option value="Famailla">Famaillá</option>
+            <option value="Lules">Lules</option>
+            <option value="Concepcion">Concepción</option>
+          </select>
+        </div>
+        <input type="hidden" name="_id" value="<%= _id %>">
+        <input class="btn mt-4" type="submit" value="Enviar Cambios" />
+      </div>
+      <% if (error) { %>
+        <h1 style="color: red"><%= error %></h1>
+        <% } %>
+      </form>
+      <a class="editButton" href="/walkers/<%= _id  %> ">
+                <button class="btn mt-4 deleteButton" 
+              />Cancelar Editar</button></a>
+        
+        <% } %>
+      
+    
+    
     
     <button type="button" class="btn btn-primary deleteButton" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
   Eliminar cuenta en PaseaDog
@@ -105,8 +200,7 @@
     </div>
   </div>
 </div>
-
-  </div>
 </div>
+ </div>
 
 <%- include("partials/footer.ejs") %>

@@ -2,6 +2,7 @@ const Walker = require("../models/Walker");
 
 const userControllers = {
   addWalker: async (req, res) => {
+    console.log(req.body);
     const {
       name,
       email,
@@ -11,9 +12,12 @@ const userControllers = {
       description,
       profileImgUrl,
       phoneNumber,
+      _id,
     } = req.body;
-    try {
-      let newWalker = new Walker({
+
+    let newWalker;
+    if (!_id) {
+      newWalker = new Walker({
         name,
         email,
         password,
@@ -23,8 +27,23 @@ const userControllers = {
         profileImgUrl,
         phoneNumber,
       });
+    } else {
+      console.log("entra al findOne");
+      newWalker = await Walker.findOne({ _id });
+      newWalker.area = area;
+      newWalker.imgUrl = imgUrl;
+      newWalker.profileImgUrl = profileImgUrl;
+      newWalker.phoneNumber = phoneNumber;
+      newWalker.description = description;
+      req.session.imgUrl = imgUrl;
+      req.session.area = area;
+      req.session.description = description;
+      req.session.profileImgurl = profileImgUrl;
+      req.session.phoneNumber = phoneNumber;
+    }
+    try {
       await newWalker.save();
-      res.redirect("/");
+      res.redirect("/walkers");
     } catch (err) {
       res.render("newWalker", {
         title: "Ingresar",
@@ -71,24 +90,22 @@ const userControllers = {
     });
   },
   updateWalker: async (req, res) => {
-    console.log("entra a updateWalker");
-    console.log(req);
     let updatedWalker = await Walker.findOne({ _id: req.params.walkerId });
-    console.log(updatedWalker, "es el updated walker");
-    console.log(updatedWalker._id);
+
     try {
-      // res.render("profile", {
-      //   title: "Perfil",
-      //   loggedIn: req.session.loggedIn,
-      //   name: req.session.name,
-      //   photo: req.session.imgUrl,
-      //   _id: req.session._id,
-      //   profilePhoto: req.session.profileImgurl,
-      //   area: req.session.area,
-      //   description: req.session.description,
-      //   error: null,
-      //   edit: null,
-      // });
+      res.render("profile", {
+        title: "Perfil",
+        loggedIn: req.session.loggedIn,
+        name: req.session.name,
+        photo: req.session.imgUrl,
+        _id: req.session._id,
+        profilePhoto: req.session.profileImgurl,
+        area: req.session.area,
+        description: req.session.description,
+        phoneNumber: req.session.phoneNumber,
+        error: null,
+        edit: true,
+      });
     } catch (err) {
       console.log(err);
     }

@@ -46,35 +46,11 @@ const walkersControllers = {
       profilePhoto: req.session.profileImgurl,
       area: req.session.area,
       description: req.session.description,
+      phoneNumber: req.session.phoneNumber,
       error: null,
-      edit: null,
+      edit: false,
     });
   },
-  // addWalker: async (req, res) => {
-  //   const { name, email, password, area, imgUrl, description } = req.body;
-  //   try {
-  //     let newWalker = new Walker({
-  //       name,
-  //       email,
-  //       password,
-  //       area,
-  //       imgUrl,
-  //       description,
-  //     });
-  //     await newWalker.save();
-  //     res.redirect("/");
-  //   } catch (err) {
-  //     res.render("newWalker", {
-  //       title: "Ingresar",
-  //       error: err,
-  //     });
-  //   }
-  // },
-  // deleteWalker: async (req, res) => {
-  //   await Walker.findOneAndDelete({ _id: req.body._id });
-  //   res.redirect("/walkers");
-  // },
-  // updateWalker: async (req, res) => {},
 };
 
 module.exports = walkersControllers;
