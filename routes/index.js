@@ -20,4 +20,6 @@ router.route("/walkers/:walkerId").get(walkersControllers.walkerProfile);
 
 router.route("/deletewalker/:walkerId").get(userControllers.deleteWalker);
 
+router.route("/update/:walkerId").get(userControllers.updateWalker);
+
 module.exports = router;

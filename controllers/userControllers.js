@@ -70,7 +70,42 @@ const userControllers = {
       res.redirect("/");
     });
   },
-  updateWalker: async (req, res) => {},
+  updateWalker: async (req, res) => {
+    console.log("entra a updateWalker");
+    console.log(req);
+    let updatedWalker = await Walker.findOne({ _id: req.params.walkerId });
+    console.log(updatedWalker, "es el updated walker");
+    console.log(updatedWalker._id);
+    try {
+      // res.render("profile", {
+      //   title: "Perfil",
+      //   loggedIn: req.session.loggedIn,
+      //   name: req.session.name,
+      //   photo: req.session.imgUrl,
+      //   _id: req.session._id,
+      //   profilePhoto: req.session.profileImgurl,
+      //   area: req.session.area,
+      //   description: req.session.description,
+      //   error: null,
+      //   edit: null,
+      // });
+    } catch (err) {
+      console.log(err);
+    }
+
+    // res.render("profile", {
+    //   title: "Perfil",
+    //   loggedIn: req.session.loggedIn,
+    //   name: req.session.name,
+    //   photo: req.session.imgUrl,
+    //   _id: req.session._id,
+    //   profilePhoto: req.session.profileImgurl,
+    //   area: req.session.area,
+    //   description: req.session.description,
+    //   error: null,
+    //   edit: true,
+    // });
+  },
 };
 
 module.exports = userControllers;

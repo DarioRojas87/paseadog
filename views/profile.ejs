@@ -19,43 +19,9 @@
         ></div>
       </div>
     </div>
-    <form class="profileForm" action="/walkers/signup" method="POST">
+    <form class="profileForm" action="/update/<%= _id %> " method="GET">
       <div class="section text-center">
-        <h4 class="mb-4 pb-3">Sign Up</h4>
-        <div class="form-group">
-          <input
-            type="text"
-            name="name"
-            class="form-style"
-            placeholder="Tu Nombre"
-            id="logname"
-            autocomplete="off"
-            required
-          />
-        </div>
-        <div class="form-group mt-2">
-          <input
-            type="email"
-            name="email"
-            class="form-style"
-            placeholder="Tu Email"
-            id="logemail"
-            autocomplete="off"
-            required
-          />
-        </div>
-        <div class="form-group mt-2">
-          <input
-            type="password"
-            name="password"
-            class="form-style"
-            placeholder="Tu Password"
-            id="logpass"
-            autocomplete="off"
-            required
-          />
-        </div>
-        <div class="form-group mt-2">
+       <div class="form-group mt-2">
           <input
             type="text"
             name="profileImgUrl"

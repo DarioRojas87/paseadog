@@ -47,6 +47,7 @@ const walkersControllers = {
       area: req.session.area,
       description: req.session.description,
       error: null,
+      edit: null,
     });
   },
   // addWalker: async (req, res) => {
