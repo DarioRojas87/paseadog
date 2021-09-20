@@ -3,8 +3,6 @@ const bcryptjs = require("bcryptjs");
 
 const userControllers = {
   addWalker: async (req, res) => {
-    console.log("entra a add walker");
-    // console.log(req.body);
     const {
       name,
       email,
@@ -20,7 +18,7 @@ const userControllers = {
     try {
       if (!_id) {
         let hashedPass = bcryptjs.hashSync(password);
-        console.log("entra en if de _id");
+
         newWalker = new Walker({
           name,
           email,
@@ -32,13 +30,11 @@ const userControllers = {
           phoneNumber,
         });
         let walkerExist = await Walker.findOne({ email: email });
-        console.log(walkerExist);
+
         if (walkerExist) {
-          console.log("entra a walker exists");
           throw new Error();
         }
       } else {
-        console.log("entra a else");
         newWalker = await Walker.findOne({ _id });
         newWalker.area = area;
         newWalker.imgUrl = imgUrl;
@@ -55,7 +51,6 @@ const userControllers = {
       await newWalker.save();
       res.redirect("/walkers");
     } catch (err) {
-      console.log(err);
       res.render("newWalker", {
         title: "Ingresar",
         error: err,
