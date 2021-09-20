@@ -1,8 +1,9 @@
-const path = require("path");
 const Walker = require("../models/Walker");
 
 const walkersControllers = {
-  home: (req, res) => {
+  home: async (req, res) => {
+    const walkers = await Walker.find();
+
     res.render("index", {
       title: "Home",
       loggedIn: req.session.loggedIn,
@@ -10,6 +11,7 @@ const walkersControllers = {
       photo: req.session.imgUrl,
       _id: req.session._id,
       profilePhoto: req.session.profileImgurl,
+      walkers,
     });
   },
 
@@ -23,6 +25,7 @@ const walkersControllers = {
       photo: req.session.imgUrl,
       _id: req.session._id,
       profilePhoto: req.session.profileImgurl,
+      phoneNumber: req.session.phoneNumber,
     });
   },
   newWalker: (req, res) => {
@@ -50,6 +53,32 @@ const walkersControllers = {
       error: null,
       edit: false,
     });
+  },
+
+  walkersFilter: async (req, res) => {
+    if (req.body.area === "all") {
+      const walkers = await Walker.find();
+      res.render("walkers", {
+        title: "Paseadores",
+        walkers,
+        loggedIn: req.session.loggedIn,
+        name: req.session.name,
+        photo: req.session.imgUrl,
+        _id: req.session._id,
+        profilePhoto: req.session.profileImgurl,
+      });
+    } else {
+      const walkers = await Walker.find({ area: req.body.area });
+      res.render("walkers", {
+        title: "Paseadores",
+        walkers,
+        loggedIn: req.session.loggedIn,
+        name: req.session.name,
+        photo: req.session.imgUrl,
+        _id: req.session._id,
+        profilePhoto: req.session.profileImgurl,
+      });
+    }
   },
 };
 

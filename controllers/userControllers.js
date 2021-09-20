@@ -1,8 +1,8 @@
 const Walker = require("../models/Walker");
+const bcryptjs = require("bcryptjs");
 
 const userControllers = {
   addWalker: async (req, res) => {
-    console.log(req.body);
     const {
       name,
       email,
@@ -14,40 +14,51 @@ const userControllers = {
       phoneNumber,
       _id,
     } = req.body;
-
     let newWalker;
-    if (!_id) {
-      newWalker = new Walker({
-        name,
-        email,
-        password,
-        area,
-        imgUrl,
-        description,
-        profileImgUrl,
-        phoneNumber,
-      });
-    } else {
-      console.log("entra al findOne");
-      newWalker = await Walker.findOne({ _id });
-      newWalker.area = area;
-      newWalker.imgUrl = imgUrl;
-      newWalker.profileImgUrl = profileImgUrl;
-      newWalker.phoneNumber = phoneNumber;
-      newWalker.description = description;
-      req.session.imgUrl = imgUrl;
-      req.session.area = area;
-      req.session.description = description;
-      req.session.profileImgurl = profileImgUrl;
-      req.session.phoneNumber = phoneNumber;
-    }
     try {
+      let hashedPass = bcryptjs.hashSync(password);
+      if (!_id) {
+        newWalker = new Walker({
+          name,
+          email,
+          password: hashedPass,
+          area,
+          imgUrl,
+          description,
+          profileImgUrl,
+          phoneNumber,
+        });
+        let walkerExist = await Walker.findOne({ email: email });
+        if (walkerExist) {
+          throw new Error("El mail ya esta siendo usado");
+        }
+      } else {
+        console.log("entra al findOne");
+        newWalker = await Walker.findOne({ _id });
+        newWalker.area = area;
+        newWalker.imgUrl = imgUrl;
+        newWalker.profileImgUrl = profileImgUrl;
+        newWalker.phoneNumber = phoneNumber;
+        newWalker.description = description;
+        req.session.imgUrl = imgUrl;
+        req.session.area = area;
+        req.session.description = description;
+        req.session.profileImgurl = profileImgUrl;
+        req.session.phoneNumber = phoneNumber;
+      }
+
       await newWalker.save();
       res.redirect("/walkers");
     } catch (err) {
+      console.log("entra al catch");
       res.render("newWalker", {
         title: "Ingresar",
         error: err,
+        loggedIn: req.session.loggedIn,
+        name: req.session.name,
+        photo: req.session.imgUrl,
+        _id: req.session._id,
+        profilePhoto: req.session.profileImgurl,
       });
     }
   },
@@ -55,8 +66,13 @@ const userControllers = {
     const { email, password } = req.body;
     try {
       let user = await Walker.findOne({ email });
-      if (user.password === password) {
-        console.log(user);
+      if (!user) {
+        throw new Error();
+      }
+      let passMatch = bcryptjs.compareSync(password, user.password);
+      if (!passMatch) {
+        throw new Error();
+      } else {
         req.session.loggedIn = true;
         req.session.name = user.name;
         req.session.imgUrl = user.imgUrl;
@@ -66,7 +82,7 @@ const userControllers = {
         req.session.email = user.email;
         req.session.profileImgurl = user.profileImgUrl;
         req.session.phoneNumber = user.phoneNumber;
-        res.redirect("/walkers");
+        res.redirect("/");
       }
     } catch (err) {
       res.render("newWalker", {

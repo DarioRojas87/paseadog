@@ -5,16 +5,22 @@
     Puedes buscar paseadores en tu area
   </h1>
   <div class="wrap">
-    <div class="search">
-      <input
-        type="text"
-        class="searchTerm"
-        placeholder="Qué área estas buscando?"
-      />
-      <button type="submit" class="searchButton">
-        <i class="fa fa-search"></i>
-      </button>
-    </div>
+    <form action="/area" method="POST">
+      <div class="search">
+        <select name="area" class="searchTerm"">
+          <option value="all">Todas las ciudades</option>
+          <option value="San Miguel">San Miguel</option>
+          <option value="Yerba Buena">Yerba Buena</option>
+          <option value="Famailla">Famaillá</option>
+          <option value="Lules">Lules</option>
+          <option value="Concepcion">Concepción</option>
+        </select>
+        <button type="submit" class="searchButton">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+      
+      </form>
   </div>
 
   <ul class="cards">
@@ -30,13 +36,12 @@
         <div class="card_content">
           <h2 class="card_title"><%= walker.name%></h2>
           <p class="card_text">
-            <%= walker.description %> y me puedes encontrar trabajando en <%=
-            walker.area %>
+            <%= walker.description %> mi numero de contacto es <span> <%= walker.phoneNumber %> </span>y me puedes encontrar trabajando en: <h2 class="walkerArea"><%=walker.area %></h2>
           </p>
-          <button class="btn card_btn">Ver info</button>
         </div>
       </div>
     </li>
+
     <% }) %> <% } %>
     <li class="cards_item"></li>
   </ul>

@@ -8,7 +8,6 @@ router.route("/").get(walkersControllers.home);
 router.route("/walkers").get(walkersControllers.walkers);
 
 router.route("/walkers/sign").get(walkersControllers.newWalker);
-// .post(walkersControllers.addWalker);
 
 router.route("/walkers/signup").post(userControllers.addWalker);
 
@@ -21,5 +20,7 @@ router.route("/walkers/:walkerId").get(walkersControllers.walkerProfile);
 router.route("/deletewalker/:walkerId").get(userControllers.deleteWalker);
 
 router.route("/update/:walkerId").get(userControllers.updateWalker);
+
+router.route("/area").post(walkersControllers.walkersFilter);
 
 module.exports = router;
