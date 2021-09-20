@@ -33,7 +33,6 @@ const userControllers = {
           throw new Error("El mail ya esta siendo usado");
         }
       } else {
-        console.log("entra al findOne");
         newWalker = await Walker.findOne({ _id });
         newWalker.area = area;
         newWalker.imgUrl = imgUrl;
@@ -50,7 +49,6 @@ const userControllers = {
       await newWalker.save();
       res.redirect("/walkers");
     } catch (err) {
-      console.log("entra al catch");
       res.render("newWalker", {
         title: "Ingresar",
         error: err,
@@ -99,7 +97,6 @@ const userControllers = {
   },
 
   deleteWalker: async (req, res) => {
-    console.log("entra al delete");
     await Walker.findOneAndDelete({ _id: req.params.walkerId });
     req.session.destroy(() => {
       res.redirect("/");
@@ -125,19 +122,6 @@ const userControllers = {
     } catch (err) {
       console.log(err);
     }
-
-    // res.render("profile", {
-    //   title: "Perfil",
-    //   loggedIn: req.session.loggedIn,
-    //   name: req.session.name,
-    //   photo: req.session.imgUrl,
-    //   _id: req.session._id,
-    //   profilePhoto: req.session.profileImgurl,
-    //   area: req.session.area,
-    //   description: req.session.description,
-    //   error: null,
-    //   edit: true,
-    // });
   },
 };
 
