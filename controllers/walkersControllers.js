@@ -8,7 +8,7 @@ const walkersControllers = {
       loggedIn: req.session.loggedIn,
       name: req.session.name,
       photo: req.session.imgUrl,
-      id: req.session.id,
+      id: req.session.userid,
       profilePhoto: req.session.profileImgurl,
       walkers,
     });
@@ -22,7 +22,7 @@ const walkersControllers = {
       loggedIn: req.session.loggedIn,
       name: req.session.name,
       photo: req.session.imgUrl,
-      id: req.session.id,
+      id: req.session.userid,
       profilePhoto: req.session.profileImgurl,
       phoneNumber: req.session.phoneNumber,
     });
@@ -34,7 +34,7 @@ const walkersControllers = {
       loggedIn: req.session.loggedIn,
       name: req.session.name,
       photo: req.session.imgUrl,
-      id: req.session.id,
+      id: req.session.userid,
       profilePhoto: req.session.profileImgurl,
     });
   },
@@ -63,7 +63,7 @@ const walkersControllers = {
         loggedIn: req.session.loggedIn,
         name: req.session.name,
         photo: req.session.imgUrl,
-        id: req.session.id,
+        id: req.session.userid,
         profilePhoto: req.session.profileImgurl,
       });
     } else {
@@ -76,7 +76,7 @@ const walkersControllers = {
         loggedIn: req.session.loggedIn,
         name: req.session.name,
         photo: req.session.imgUrl,
-        id: req.session.id,
+        id: req.session.userid,
         profilePhoto: req.session.profileImgurl,
       });
     }
