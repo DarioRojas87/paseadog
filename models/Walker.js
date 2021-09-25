@@ -1,16 +1,44 @@
-const mongoose = require("mongoose");
+const Sequelize = require("sequelize");
+const db = require("../config/database");
 
-const walkerSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  password: { type: String, required: true },
-  area: { type: String, required: true },
-  imgUrl: { type: String, required: true },
-  profileImgUrl: { type: String, required: true },
-  description: { type: String, required: true },
-  phoneNumber: { type: String, required: true },
+const Walker = db.define("walker", {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true,
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  area: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  imgUrl: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  profileImgUrl: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  description: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  phoneNumber: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
 });
-
-const Walker = mongoose.model("walker", walkerSchema);
-
 module.exports = Walker;

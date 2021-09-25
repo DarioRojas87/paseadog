@@ -12,14 +12,20 @@ const userControllers = {
       description,
       profileImgUrl,
       phoneNumber,
-      _id,
+      id,
     } = req.body;
-    let newWalker;
-    try {
-      if (!_id) {
-        let hashedPass = bcryptjs.hashSync(password);
 
-        newWalker = new Walker({
+    try {
+      if (!id) {
+        let hashedPass = bcryptjs.hashSync(password);
+        let walkerExist = await Walker.findOne({
+          where: { email: email },
+        });
+
+        if (walkerExist) {
+          throw new Error();
+        }
+        await Walker.create({
           name,
           email,
           password: hashedPass,
@@ -29,18 +35,8 @@ const userControllers = {
           profileImgUrl,
           phoneNumber,
         });
-        let walkerExist = await Walker.findOne({ email: email });
-
-        if (walkerExist) {
-          throw new Error();
-        }
       } else {
-        newWalker = await Walker.findOne({ _id });
-        newWalker.area = area;
-        newWalker.imgUrl = imgUrl;
-        newWalker.profileImgUrl = profileImgUrl;
-        newWalker.phoneNumber = phoneNumber;
-        newWalker.description = description;
+        await Walker.update({ ...req.body }, { where: { id: req.body.id } });
         req.session.imgUrl = imgUrl;
         req.session.area = area;
         req.session.description = description;
@@ -48,7 +44,6 @@ const userControllers = {
         req.session.phoneNumber = phoneNumber;
       }
 
-      await newWalker.save();
       res.redirect("/walkers");
     } catch (err) {
       res.render("newWalker", {
@@ -57,7 +52,7 @@ const userControllers = {
         loggedIn: req.session.loggedIn,
         name: req.session.name,
         photo: req.session.imgUrl,
-        _id: req.session._id,
+        id: req.session.userid,
         profilePhoto: req.session.profileImgurl,
       });
     }
@@ -65,7 +60,9 @@ const userControllers = {
   logWalker: async (req, res) => {
     const { email, password } = req.body;
     try {
-      let user = await Walker.findOne({ email });
+      let user = await Walker.findOne({
+        where: { email: email },
+      });
       if (!user) {
         throw new Error();
       }
@@ -78,7 +75,7 @@ const userControllers = {
         req.session.imgUrl = user.imgUrl;
         req.session.area = user.area;
         req.session.description = user.description;
-        req.session._id = user._id;
+        req.session.userid = user.id;
         req.session.email = user.email;
         req.session.profileImgurl = user.profileImgUrl;
         req.session.phoneNumber = user.phoneNumber;
@@ -99,21 +96,20 @@ const userControllers = {
   },
 
   deleteWalker: async (req, res) => {
-    await Walker.findOneAndDelete({ _id: req.params.walkerId });
+    let walkerToDelete = await Walker.findByPk(req.params.walkerId);
+    await walkerToDelete.destroy();
     req.session.destroy(() => {
       res.redirect("/");
     });
   },
   updateWalker: async (req, res) => {
-    let updatedWalker = await Walker.findOne({ _id: req.params.walkerId });
-
     try {
       res.render("profile", {
         title: "Perfil",
         loggedIn: req.session.loggedIn,
         name: req.session.name,
         photo: req.session.imgUrl,
-        _id: req.session._id,
+        id: req.session.userid,
         profilePhoto: req.session.profileImgurl,
         area: req.session.area,
         description: req.session.description,

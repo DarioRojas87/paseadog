@@ -21,7 +21,7 @@
     </div>
     
       <% if (!edit) { %>
-        <form class="profileForm" action="/update/<%= _id %> " method="GET">
+        <form class="profileForm" action="/update/<%= id %> " method="GET">
        <div class="section text-center">
        <div class="form-group mt-2">
           <input
@@ -89,7 +89,7 @@
         </div>
         
 
-        <a class="editButton" href="/update/<%= _id %> ">
+        <a class="editButton" href="/update/<%= id %> ">
           <button class="btn mt-4 deleteButton" 
         />Editar Cuenta</button></a>
         
@@ -162,14 +162,14 @@
             <option value="Concepcion">Concepción</option>
           </select>
         </div>
-        <input type="hidden" name="_id" value="<%= _id %>">
+        <input type="hidden" name="id" value="<%= id %>">
         <input class="btn mt-4" type="submit" value="Enviar Cambios" />
       </div>
       <% if (error) { %>
         <h1 style="color: red"><%= error %></h1>
         <% } %>
       </form>
-      <a class="editButton" href="/walkers/<%= _id  %> ">
+      <a class="editButton" href="/walkers/<%= id  %> ">
                 <button class="btn mt-4 deleteButton" 
               />Cancelar Editar</button></a>
         
@@ -193,7 +193,7 @@
       </div>
       <div class="modal-footer">
         
-       <a href="/deletewalker/<%= _id %> ">
+       <a href="/deletewalker/<%= id %> ">
       <button class="btn mt-4 deleteButton" 
     />borrar cuenta</button></a>
       </div>

@@ -1,15 +1,13 @@
 const express = require("express");
 const router = require("./routes/index");
 const session = require("express-session");
-const mongo = require("connect-mongodb-session")(session);
 require("dotenv").config();
+const db = require("./config/database");
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
-const myStore = new mongo({
-  uri: process.env.MONGODB,
-  collection: "sessions",
+const myStore = new SequelizeStore({
+  db: db,
 });
-
-require("./config/database");
 
 const app = express();
 
@@ -22,11 +20,12 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: myStore,
+    proxy: true,
+    db: db,
   })
 );
-
-app.use("/", router);
-
-app.listen(process.env.PORT || 4000, process.env.HOST || "0.0.0.0", () =>
-  console.log("Server up and running in port 4000")
-);
+myStore.sync();
+db.sync().then(() => {
+  app.use("/", router);
+  app.listen(4000, () => console.log("Server up and running in port 4000"));
+});

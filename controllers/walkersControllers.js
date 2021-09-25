@@ -2,28 +2,27 @@ const Walker = require("../models/Walker");
 
 const walkersControllers = {
   home: async (req, res) => {
-    const walkers = await Walker.find();
-
+    const walkers = await Walker.findAll({ raw: true });
     res.render("index", {
       title: "Home",
       loggedIn: req.session.loggedIn,
       name: req.session.name,
       photo: req.session.imgUrl,
-      _id: req.session._id,
+      id: req.session.id,
       profilePhoto: req.session.profileImgurl,
       walkers,
     });
   },
 
   walkers: async (req, res) => {
-    const walkers = await Walker.find();
+    const walkers = await Walker.findAll({ raw: true });
     res.render("walkers", {
       title: "Paseadores",
       walkers,
       loggedIn: req.session.loggedIn,
       name: req.session.name,
       photo: req.session.imgUrl,
-      _id: req.session._id,
+      id: req.session.id,
       profilePhoto: req.session.profileImgurl,
       phoneNumber: req.session.phoneNumber,
     });
@@ -35,7 +34,7 @@ const walkersControllers = {
       loggedIn: req.session.loggedIn,
       name: req.session.name,
       photo: req.session.imgUrl,
-      _id: req.session._id,
+      id: req.session.id,
       profilePhoto: req.session.profileImgurl,
     });
   },
@@ -45,7 +44,7 @@ const walkersControllers = {
       loggedIn: req.session.loggedIn,
       name: req.session.name,
       photo: req.session.imgUrl,
-      _id: req.session._id,
+      id: req.session.userid,
       profilePhoto: req.session.profileImgurl,
       area: req.session.area,
       description: req.session.description,
@@ -57,25 +56,27 @@ const walkersControllers = {
 
   walkersFilter: async (req, res) => {
     if (req.body.area === "all") {
-      const walkers = await Walker.find();
+      const walkers = await Walker.findAll({ raw: true });
       res.render("walkers", {
         title: "Paseadores",
         walkers,
         loggedIn: req.session.loggedIn,
         name: req.session.name,
         photo: req.session.imgUrl,
-        _id: req.session._id,
+        id: req.session.id,
         profilePhoto: req.session.profileImgurl,
       });
     } else {
-      const walkers = await Walker.find({ area: req.body.area });
+      let walkers = await Walker.findAll({
+        where: { area: req.body.area },
+      });
       res.render("walkers", {
         title: "Paseadores",
         walkers,
         loggedIn: req.session.loggedIn,
         name: req.session.name,
         photo: req.session.imgUrl,
-        _id: req.session._id,
+        id: req.session.id,
         profilePhoto: req.session.profileImgurl,
       });
     }
